@@ -1,0 +1,27 @@
+<div class="dashboard-container">
+  <header>
+    <div class="header-left">
+      <h1>Dashboard</h1>
+    </div>
+    <div class="header-right">
+      @if (user()) {
+        <img [src]="user()?.image" alt="avatar" class="avatar" />
+      }
+      <button (click)="onLogout()">Déconnexion</button>
+    </div>
+  </header>
+
+  <main>
+    @if (user()) {
+      <div class="welcome-card">
+        <h2>Bienvenue, {{ user()?.firstName }} {{ user()?.lastName }} !</h2>
+        <p>Email: {{ user()?.email }}</p>
+        <p>Username: {{ user()?.username }}</p>
+      </div>
+    }
+
+    <div class="content">
+      <p>Vous êtes connecté avec succès.</p>
+    </div>
+  </main>
+</div>
