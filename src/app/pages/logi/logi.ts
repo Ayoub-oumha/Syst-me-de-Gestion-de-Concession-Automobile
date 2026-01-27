@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { selectAuthError, selectAuthLoading } from '../../store/auth';
+import { login } from '../../store/auth/auth.actions';
 
 @Component({
   selector: 'app-logi',
