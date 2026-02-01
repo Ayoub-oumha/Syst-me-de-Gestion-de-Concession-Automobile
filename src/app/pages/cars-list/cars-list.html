@@ -1,0 +1,139 @@
+<div class="cars-list-container">
+  <header class="page-header">
+    <h1>Liste des Voitures</h1>
+  </header>
+
+  <div class="controls-bar">
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Rechercher par modèle..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+        class="search-input"
+      />
+    </div>
+
+    <div class="filters">
+      <select [(ngModel)]="filterAvailable" (ngModelChange)="onFilterChange()" class="filter-select">
+        <option [ngValue]="null">Toutes les voitures</option>
+        <option [ngValue]="true">Disponibles</option>
+        <option [ngValue]="false">Non disponibles</option>
+      </select>
+
+      <button (click)="toggleViewMode()" class="btn btn-secondary">
+        {{ viewMode === 'grid' ? '📋 Vue Tableau' : '📱 Vue Grille' }}
+      </button>
+
+      @if (isAuthenticated$ | async) {
+        <a routerLink="/cars/add" class="btn btn-primary">
+          ➕ Ajouter
+        </a>
+      }
+    </div>
+  </div>
+
+  @if (loading$ | async) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Chargement des voitures...</p>
+    </div>
+  } @else {
+    @if (viewMode === 'grid') {
+      <div class="cars-grid">
+        @for (car of filteredCars; track car.id) {
+          <div class="car-card" [routerLink]="['/cars', car.id]">
+            <div class="car-image">
+              <img [src]="car.image" [alt]="car.modele" />
+              <span class="availability-badge" [class.available]="car.disponibilite">
+                {{ car.disponibilite ? 'Disponible' : 'Indisponible' }}
+              </span>
+              @if (isAuthenticated$ | async) {
+                <div class="image-actions">
+                  <a [routerLink]="['/cars/edit', car.id]" class="btn-icon btn-edit" (click)="$event.stopPropagation()" title="Modifier">
+                    ✏️
+                  </a>
+                  <button (click)="deleteCar(car.id, $event)" class="btn-icon btn-delete" title="Supprimer">
+                    🗑️
+                  </button>
+                </div>
+              }
+            </div>
+            <div class="car-content">
+              <h3 class="car-title">{{ car.modele }}</h3>
+              <p class="car-brand">
+                @for (brand of brands$ | async; track brand.id) {
+                  @if (brand.id === car.marque_id) {
+                    {{ brand.titre }}
+                  }
+                }
+              </p>
+              <div class="car-details">
+                <span class="detail-item">⛽ {{ car.carburant }}</span>
+                <span class="detail-item">💰 {{ car.prix | number:'1.0-0' }} DH</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="table-container">
+        <table class="cars-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Marque</th>
+              <th>Modèle</th>
+              <th>Prix</th>
+              <th>Carburant</th>
+              <th>Disponibilité</th>
+              @if (isAuthenticated$ | async) {
+                <th>Actions</th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (car of filteredCars; track car.id) {
+              <tr [routerLink]="['/cars', car.id]" class="clickable-row">
+                <td>
+                  <img [src]="car.image" [alt]="car.modele" class="table-image" />
+                </td>
+                <td>
+                  @for (brand of brands$ | async; track brand.id) {
+                    @if (brand.id === car.marque_id) {
+                      {{ brand.titre }}
+                    }
+                  }
+                </td>
+                <td>{{ car.modele }}</td>
+                <td>{{ car.prix | number:'1.0-0' }} DH</td>
+                <td>{{ car.carburant }}</td>
+                <td>
+                  <span class="status-badge" [class.available]="car.disponibilite">
+                    {{ car.disponibilite ? 'Disponible' : 'Indisponible' }}
+                  </span>
+                </td>
+                @if (isAuthenticated$ | async) {
+                  <td class="actions-cell">
+                    <a [routerLink]="['/cars/edit', car.id]" class="btn-action btn-edit" (click)="$event.stopPropagation()">
+                      ✏️
+                    </a>
+                    <button (click)="deleteCar(car.id, $event)" class="btn-action btn-delete">
+                      🗑️
+                    </button>
+                  </td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
+    @if (filteredCars.length === 0) {
+      <div class="empty-state">
+        <p>Aucune voiture trouvée</p>
+      </div>
+    }
+  }
+</div>

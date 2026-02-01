@@ -1,0 +1,22 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <div class="navbar-brand">
+      <a routerLink="/cars" class="brand-link">
+        <span class="brand-icon">🚗</span>
+        <span class="brand-text">Gestion Automobile</span>
+      </a>
+    </div>
+
+    <div class="navbar-menu">
+      <a routerLink="/cars" routerLinkActive="active" class="nav-link">
+        Voitures
+      </a>
+      
+      @if (isAuthenticated$ | async) {
+        <button (click)="onLogout()" class="btn-logout">
+          🚪 Déconnexion
+        </button>
+      }
+    </div>
+  </div>
+</nav>

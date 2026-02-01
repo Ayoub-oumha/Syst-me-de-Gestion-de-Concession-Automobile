@@ -1,0 +1,25 @@
+<div class="layout-container">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>Marques</h2>
+    </div>
+    <div class="sidebar-content">
+      @if (loading$ | async) {
+        <div class="loading">Chargement...</div>
+      } @else {
+        <ul class="brands-list">
+          @for (brand of brands$ | async; track brand.id) {
+            <li class="brand-item">
+              <span class="brand-icon">🚗</span>
+              <span class="brand-name">{{ brand.titre }}</span>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </aside>
+  
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

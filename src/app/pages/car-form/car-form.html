@@ -1,0 +1,150 @@
+<div class="car-form-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h1>{{ isEditMode ? 'Modifier une voiture' : 'Ajouter une voiture' }}</h1>
+      <a routerLink="/cars" class="close-btn">✕</a>
+    </div>
+
+    <form [formGroup]="carForm" (ngSubmit)="onSubmit()" class="car-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="marque_id" class="form-label">
+            Marque <span class="required">*</span>
+          </label>
+          <select 
+            id="marque_id" 
+            formControlName="marque_id" 
+            class="form-control"
+            [class.error]="isFieldInvalid('marque_id')">
+            <option value="">Sélectionner une marque</option>
+            @for (brand of brands$ | async; track brand.id) {
+              <option [value]="brand.id">{{ brand.titre }}</option>
+            }
+          </select>
+          @if (isFieldInvalid('marque_id')) {
+            <span class="error-message">{{ getErrorMessage('marque_id') }}</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="modele" class="form-label">
+            Modèle <span class="required">*</span>
+          </label>
+          <input 
+            id="modele" 
+            type="text" 
+            formControlName="modele" 
+            placeholder="Ex: 3008"
+            class="form-control"
+            [class.error]="isFieldInvalid('modele')">
+          @if (isFieldInvalid('modele')) {
+            <span class="error-message">{{ getErrorMessage('modele') }}</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="prix" class="form-label">
+            Prix (DH) <span class="required">*</span>
+          </label>
+          <input 
+            id="prix" 
+            type="number" 
+            formControlName="prix" 
+            placeholder="Ex: 280500"
+            class="form-control"
+            [class.error]="isFieldInvalid('prix')">
+          @if (isFieldInvalid('prix')) {
+            <span class="error-message">{{ getErrorMessage('prix') }}</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="carburant" class="form-label">
+            Carburant <span class="required">*</span>
+          </label>
+          <select 
+            id="carburant" 
+            formControlName="carburant" 
+            class="form-control"
+            [class.error]="isFieldInvalid('carburant')">
+            <option value="">Sélectionner un carburant</option>
+            <option value="diesel">Diesel</option>
+            <option value="essence">Essence</option>
+            <option value="électrique">Électrique</option>
+            <option value="hybride">Hybride</option>
+          </select>
+          @if (isFieldInvalid('carburant')) {
+            <span class="error-message">{{ getErrorMessage('carburant') }}</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="image" class="form-label">
+          URL de l'image <span class="required">*</span>
+        </label>
+        <input 
+          id="image" 
+          type="url" 
+          formControlName="image" 
+          placeholder="https://example.com/car-image.jpg"
+          class="form-control"
+          [class.error]="isFieldInvalid('image')">
+        @if (isFieldInvalid('image')) {
+          <span class="error-message">{{ getErrorMessage('image') }}</span>
+        }
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="dateDeMiseEnVente" class="form-label">
+            Date de mise en vente <span class="required">*</span>
+          </label>
+          <input 
+            id="dateDeMiseEnVente" 
+            type="date" 
+            formControlName="dateDeMiseEnVente" 
+            class="form-control"
+            [class.error]="isFieldInvalid('dateDeMiseEnVente')">
+          @if (isFieldInvalid('dateDeMiseEnVente')) {
+            <span class="error-message">{{ getErrorMessage('dateDeMiseEnVente') }}</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            Disponibilité <span class="required">*</span>
+          </label>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input 
+                type="checkbox" 
+                formControlName="disponibilite" 
+                class="checkbox-input">
+              <span>La voiture est disponible</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <a routerLink="/cars" class="btn btn-secondary">
+          Annuler
+        </a>
+        <button 
+          type="submit" 
+          class="btn btn-primary"
+          [disabled]="(loading$ | async) || carForm.invalid">
+          @if (loading$ | async) {
+            <span class="btn-spinner"></span>
+            Enregistrement...
+          } @else {
+            {{ isEditMode ? 'Mettre à jour' : 'Ajouter' }}
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

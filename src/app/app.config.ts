@@ -6,6 +6,8 @@ import { provideEffects } from '@ngrx/effects';
 
 import { routes } from './app.routes';
 import { authReducer, AuthEffects } from './store/auth';
+import { carReducer, CarEffects } from './store/car';
+import { brandReducer, BrandEffects } from './store/brand';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,7 +15,11 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
-    provideStore({ auth: authReducer }),
-    provideEffects([AuthEffects])
+    provideStore({ 
+      auth: authReducer,
+      car: carReducer,
+      brand: brandReducer
+    }),
+    provideEffects([AuthEffects, CarEffects, BrandEffects])
   ]
 };

@@ -1,0 +1,46 @@
+6. User Stories
+Authentification
+US-01 : En tant qu'employé, je veux me connecter avec mes identifiants pour
+accéder au système de gestion.
+● Login avec DummyJSON (username: emilys, password: emilyspass)
+● Stockage du token
+● Redirection après connexion
+US-02 : En tant qu'employé authentifié, je veux me déconnecter pour sécuriser
+mon accès.
+● Bouton déconnexion visible
+● Suppression du token
+● Redirection vers login
+US-03 : En tant que système, je veux protéger les routes sensibles pour que seuls
+les utilisateurs authentifiés puissent modifier les données.
+● AuthGuard sur les routes /ajouter et /modifier
+● Redirection automatique si non authentifié
+Consultation & État
+US-04 : En tant que visiteur, je veux voir la liste de toutes les voitures pour
+consulter la disponibilité.
+● Affichage en tableau/Grid
+● Marque, modèle, prix, carburant, disponibilité
+● Chargement depuis JSON Server
+US-05 : En tant que visiteur, je veux voir les détails d'une voiture pour obtenir
+toutes les informations.
+● Page dédiée avec toutes les infos
+● Bouton retour à la liste
+● Boutons modifier/supprimer si authentifié
+Gestion CRUD
+US-06 : En tant qu'employé authentifié, je veux ajouter une voiture.
+● Formulaire avec validation des données
+● Enregistrement via JSON Server
+● Notification de succès
+US-07 : En tant qu'employé authentifié, je veux modifier une voiture existante pour
+corriger ou mettre à jour les informations.
+● Formulaire pré-rempli
+● Validation des champs
+● Mise à jour via JSON Server
+● Redirection après succès
+US-08 : En tant qu'employé authentifié, je veux supprimer une voiture.
+● Confirmation avant suppression
+● Suppression définitive
+● Notification de succès
+US-09 : En tant qu'utilisateur, je veux recevoir des notifications claires pour
+comprendre le résultat de mes actions.
+● Messages de succès/erreur
+● Indicateurs de chargement(loading

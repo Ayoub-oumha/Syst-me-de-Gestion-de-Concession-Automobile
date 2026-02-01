@@ -1,0 +1,102 @@
+<div class="car-detail-container">
+  @if (loading$ | async) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Chargement des détails...</p>
+    </div>
+  } @else if (car$ | async; as car) {
+    <div class="detail-card">
+      <div class="detail-header">
+        <a routerLink="/cars" class="back-btn">← Retour à la liste</a>
+        <div class="header-actions">
+          @if (isAuthenticated$ | async) {
+            <a [routerLink]="['/cars/edit', car.id]" class="btn btn-edit">
+              ✏️ Modifier
+            </a>
+            <button (click)="deleteCar(car.id)" class="btn btn-delete">
+              🗑️ Supprimer
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="detail-content">
+        <div class="image-section">
+          <img [src]="car.image" [alt]="car.modele" class="car-image" />
+          <span class="availability-badge" [class.available]="car.disponibilite">
+            {{ car.disponibilite ? '✓ Disponible' : '✗ Indisponible' }}
+          </span>
+        </div>
+
+        <div class="info-section">
+          <h1 class="car-title">{{ car.modele }}</h1>
+          
+          @if (brand$ | async; as brand) {
+            <p class="car-brand">
+              <span class="label">Marque:</span>
+              <span class="value">{{ brand.titre }}</span>
+            </p>
+          }
+
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-icon">💰</span>
+              <div>
+                <div class="info-label">Prix</div>
+                <div class="info-value">{{ car.prix | number:'1.0-0' }} DH</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <span class="info-icon">⛽</span>
+              <div>
+                <div class="info-label">Carburant</div>
+                <div class="info-value">{{ car.carburant }}</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <span class="info-icon">📅</span>
+              <div>
+                <div class="info-label">Date de mise en vente</div>
+                <div class="info-value">{{ car.dateDeMiseEnVente }}</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <span class="info-icon">🔑</span>
+              <div>
+                <div class="info-label">ID</div>
+                <div class="info-value">#{{ car.id }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="status-section">
+            <h3>Statut de disponibilité</h3>
+            <div class="status-card" [class.available]="car.disponibilite">
+              @if (car.disponibilite) {
+                <span class="status-icon">✓</span>
+                <div>
+                  <div class="status-title">Disponible</div>
+                  <div class="status-text">Cette voiture est actuellement disponible à la vente</div>
+                </div>
+              } @else {
+                <span class="status-icon">✗</span>
+                <div>
+                  <div class="status-title">Indisponible</div>
+                  <div class="status-text">Cette voiture n'est pas disponible pour le moment</div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="empty-state">
+      <p>Voiture introuvable</p>
+      <a routerLink="/cars" class="btn btn-primary">Retour à la liste</a>
+    </div>
+  }
+</div>
