@@ -1,0 +1,82 @@
+import { inject, Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { of } from 'rxjs';
+import { map, catchError, switchMap } from 'rxjs/operators';
+import { CarService } from '../../services/car.service';
+import * as CarActions from './car.actions';
+
+@Injectable()
+export class CarEffects {
+  private actions$ = inject(Actions);
+  private carService = inject(CarService);
+
+  loadCars$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CarActions.loadCars),
+      switchMap(() =>
+        this.carService.getCars().pipe(
+          map((cars) => CarActions.loadCarsSuccess({ cars })),
+          catchError((error) =>
+            of(CarActions.loadCarsFailure({ error: error.message }))
+          )
+        )
+      )
+    )
+  );
+
+  loadCarById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CarActions.loadCarById),
+      switchMap(({ id }) =>
+        this.carService.getCarById(id).pipe(
+          map((car) => CarActions.loadCarByIdSuccess({ car })),
+          catchError((error) =>
+            of(CarActions.loadCarByIdFailure({ error: error.message }))
+          )
+        )
+      )
+    )
+  );
+
+  createCar$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CarActions.createCar),
+      switchMap(({ car }) =>
+        this.carService.createCar(car).pipe(
+          map((newCar) => CarActions.createCarSuccess({ car: newCar })),
+          catchError((error) =>
+            of(CarActions.createCarFailure({ error: error.message }))
+          )
+        )
+      )
+    )
+  );
+
+  updateCar$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CarActions.updateCar),
+      switchMap(({ car }) =>
+        this.carService.updateCar(car).pipe(
+          map((updatedCar) => CarActions.updateCarSuccess({ car: updatedCar })),
+          catchError((error) =>
+            of(CarActions.updateCarFailure({ error: error.message }))
+          )
+        )
+      )
+    )
+  );
+
+  deleteCar$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CarActions.deleteCar),
+      switchMap(({ id }) =>
+        this.carService.deleteCar(id).pipe(
+          map(() => CarActions.deleteCarSuccess({ id })),
+          catchError((error) =>
+            of(CarActions.deleteCarFailure({ error: error.message }))
+          )
+        )
+      )
+    )
+  );
+}
