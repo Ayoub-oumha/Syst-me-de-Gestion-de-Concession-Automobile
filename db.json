@@ -1,0 +1,70 @@
+{
+  "voitures": [
+    {
+      "id": 1,
+      "marque_id": 1,
+      "modele": "3008",
+      "prix": 280500,
+      "carburant": "diesel",
+      "image": "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=500",
+      "disponibilite": true,
+      "dateDeMiseEnVente": "2023-01-21"
+    },
+    {
+      "id": 2,
+      "marque_id": 2,
+      "modele": "Clio",
+      "prix": 180000,
+      "carburant": "essence",
+      "image": "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=500",
+      "disponibilite": true,
+      "dateDeMiseEnVente": "2023-02-15"
+    },
+    {
+      "id": 3,
+      "marque_id": 3,
+      "modele": "Corolla",
+      "prix": 250000,
+      "carburant": "hybride",
+      "image": "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500",
+      "disponibilite": false,
+      "dateDeMiseEnVente": "2023-03-10"
+    },
+    {
+      "marque_id": 2,
+      "modele": "Voluptates minus sit",
+      "prix": 36,
+      "carburant": "hybride",
+      "image": "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=500",
+      "disponibilite": false,
+      "dateDeMiseEnVente": "1981-05-13",
+      "id": 4
+    }
+  ],
+  "marques": [
+    {
+      "id": 1,
+      "titre": "Peugeot"
+    },
+    {
+      "id": 2,
+      "titre": "Renault"
+    },
+    {
+      "id": 3,
+      "titre": "Toyota"
+    },
+    {
+      "id": 4,
+      "titre": "Volkswagen"
+    },
+    {
+      "id": 5,
+      "titre": "Mercedes"
+    },
+    {
+      "id": 6,
+      "titre": "BMW"
+    }
+  ]
+}
