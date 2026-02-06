@@ -16,6 +16,8 @@
         <button (click)="onLogout()" class="btn-logout">
           🚪 Déconnexion
         </button>
+      } @else {
+        <button (click)="login()" class="btn-login">Login</button>
       }
     </div>
   </div>

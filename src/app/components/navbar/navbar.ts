@@ -24,4 +24,7 @@ export class Navbar {
     this.store.dispatch(logout());
     this.router.navigate(['/login']);
   }
+  login(): void {
+    this.router.navigate(['/login'])
+  }
 }

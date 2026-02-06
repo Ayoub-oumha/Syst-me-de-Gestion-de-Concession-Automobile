@@ -33,7 +33,7 @@ export class AuthEffects {
         tap(({ user }) => {
           localStorage.setItem('accessToken', user.accessToken);
           localStorage.setItem('refreshToken', user.refreshToken);
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/cars']);
         })
       ),
     { dispatch: false }

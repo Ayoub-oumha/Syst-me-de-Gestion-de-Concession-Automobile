@@ -32,6 +32,7 @@ export class Logi {
       
       this.store.select(selectIsAuthenticated).subscribe(isAuth => {
         if (isAuth) {
+          // console.log('Login successful, navigating to /cars');
           this.router.navigate(['/cars']);
         }
       });

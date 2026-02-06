@@ -8,7 +8,16 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "api": "json-server --watch db.json --port 3000",
-    "dev": "concurrently \"npm run api\" \"npm start\""
+    "dev": "concurrently \"npm run api\" \"npm start\"",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "e2e": "start-server-and-test dev http://localhost:4200 cypress:run"
+  },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": "cypress/e2e/**/*.ts",
+    "html": {
+      "enabled": true
+    }
   },
   "prettier": {
     "printWidth": 100,
@@ -40,8 +49,11 @@
     "@angular/build": "^20.3.15",
     "@angular/cli": "^20.3.15",
     "@angular/compiler-cli": "^20.3.0",
+    "@badeball/cypress-cucumber-preprocessor": "^24.0.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
     "@types/jasmine": "~5.1.0",
     "concurrently": "^8.2.2",
+    "cypress": "^15.9.0",
     "jasmine-core": "~5.9.0",
     "json-server": "^0.17.4",
     "karma": "~6.4.0",
